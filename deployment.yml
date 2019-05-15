@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: passenger-service
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: passenger-service
+  template:
+    metadata:
+      labels:
+        run: passenger-service
+    spec:
+      containers:
+      - image: us.icr.io/living-on-the-cloud/passenger-service:latest
+        name: passenger-service
+        ports:
+        - containerPort: 8080
+#        env:
+#        - name: POSTGRES_USERNAME
+#          valueFrom:
+#            secretKeyRef:
+#              name: postgres-connection
+#              key: username
+#        - name: POSTGRES_PASSWORD
+#          valueFrom:
+#            secretKeyRef:
+#              name: postgres-connection
+#              key: password
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:  
+  name: passenger-service-node-port
+spec:
+  selector:    
+    run: passenger-service
+  type: NodePort
+  ports:  
+  - name: http
+    port: 8080
+    targetPort: 8080
+    nodePort: 31417
+    protocol: TCP
