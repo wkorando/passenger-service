@@ -18,17 +18,17 @@ spec:
         name: passenger-service
         ports:
         - containerPort: 8080
-#        env:
-#        - name: POSTGRES_USERNAME
-#          valueFrom:
-#            secretKeyRef:
-#              name: postgres-connection
-#              key: username
-#        - name: POSTGRES_PASSWORD
-#          valueFrom:
-#            secretKeyRef:
-#              name: postgres-connection
-#              key: password
+        env:
+        - name: POSTGRES_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-connection
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-connection
+              key: password
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -49,3 +49,12 @@ spec:
     targetPort: 8080
     nodePort: 31417
     protocol: TCP
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-connection
+type: Opaque
+data:
+  username: c2E=
+  password: c2E=
