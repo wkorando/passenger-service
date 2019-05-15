@@ -22,6 +22,13 @@ public class Passenger {
 	@Column(name = "rating")
 	private double rating;
 
+	protected Passenger(long id, String firstName, String lastName, double rating) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.rating = rating;
+	}
+
 	protected Passenger(String firstName, String lastName, double rating) {
 		this.firstName = firstName;
 		this.lastName = lastName;
