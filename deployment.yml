@@ -29,6 +29,17 @@ spec:
             secretKeyRef:
               name: postgres-connection
               key: password
+        - name: KAFKA_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: kafka-connection
+              key: username
+        - name: KAFKA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kafka-connection
+              key: password
+
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -58,3 +69,12 @@ type: Opaque
 data:
   username: c2E=
   password: c2E=
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kafka-connection
+type: Opaque
+data:
+  username: SVV6V0NGc2cxemRIaVZqYg==
+  password: M3NrM0tZNjZ4VHpQTTdtSTBGQ0t3b1ZZOUZNZXRDcUo=
